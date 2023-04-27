@@ -22,7 +22,7 @@ class Ais_processing:
         """'
         Loading an AIS file from either fether, pickle or csv format.
         AIS data should include
-        mmsi, time, lat, long, sog and cog.
+        mmsi, time, lat, lon, sog and cog.
         """
         self.df = _ais_helper_funcs.load_dataset(path)
 
@@ -36,7 +36,7 @@ class Ais_processing:
         self.df = remove_nan(self.df)
         self.df = round_data(self.df, **kwargs)
         self.df = filter_lat(self.df, **kwargs)
-        self.df = filter_long(self.df, **kwargs)
+        self.df = filter_lon(self.df, **kwargs)
         self.df = filter_cog(self.df, **kwargs)
         self.df = filter_sog(self.df, **kwargs)
 

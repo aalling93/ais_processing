@@ -132,13 +132,13 @@ def get_index(
     samples_description: list,
     parms=[
         "lat",
-        "long",
+        "lon",
         "sog",
         "cog",
         "Total_distance",
         "Running_Distance",
         "delta_lat",
-        "delta_long",
+        "delta_lon",
     ],
 ):
     features = samples_description.isin(parms)

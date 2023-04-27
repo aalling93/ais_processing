@@ -3,13 +3,13 @@ import pandas as pd
 
 def remove_nan(df: pd.core.frame.DataFrame):
     """ """
-    df = df.dropna(subset=["lat", "long", "sog", "cog"])
+    df = df.dropna(subset=["lat", "lon", "sog", "cog"])
     return df
 
 
 def round_data(df: pd.core.frame.DataFrame, round_coord: int = 6, round_sog: int = 1, round_cog: int = 0):
     df.lat = df.lat.round(round_coord)
-    df.long = df.long.round(round_coord)
+    df.lon = df.lon.round(round_coord)
     df.sog = df.sog.round(round_sog)
     df.cog = df.cog.round(round_cog)
 
@@ -23,9 +23,9 @@ def filter_lat(df: pd.core.frame.DataFrame, lat_min: float = -180, lat_max: floa
     return df
 
 
-def filter_long(df: pd.core.frame.DataFrame, long_min: float = -180, long_max: float = 180):
-    df = df[df.long > long_min]
-    df = df[df.long < long_max]
+def filter_lon(df: pd.core.frame.DataFrame, lon_min: float = -180, lon_max: float = 180):
+    df = df[df.lon > lon_min]
+    df = df[df.lon < lon_max]
 
     return df
 

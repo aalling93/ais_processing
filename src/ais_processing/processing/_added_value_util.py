@@ -22,10 +22,10 @@ def calculate_bearing_single(df):
     lat1 = math.radians(pointA[0])
     lat2 = math.radians(pointB[0])
 
-    diffLong = math.radians(pointB[1] - pointA[1])
-    x = math.sin(diffLong) * math.cos(lat2)
+    difflon = math.radians(pointB[1] - pointA[1])
+    x = math.sin(difflon) * math.cos(lat2)
     y = math.cos(lat1) * math.sin(lat2) - (
-        math.sin(lat1) * math.cos(lat2) * math.cos(diffLong)
+        math.sin(lat1) * math.cos(lat2) * math.cos(difflon)
     )
     initial_bearing = math.atan2(x, y)
     initial_bearing = math.degrees(initial_bearing)
@@ -33,7 +33,7 @@ def calculate_bearing_single(df):
     return compass_bearing
 
 
-def spherical_distance(lat1, long1, lat2, long2):
+def spherical_distance(lat1, lon1, lat2, lon2):
     """'
     Adding the distance between two geographical locations
     the distance is calucualte on a sphere of radius r
@@ -42,13 +42,13 @@ def spherical_distance(lat1, long1, lat2, long2):
     phi2 = 0.5 * math.pi - lat2
     # mean radius in meters
     r = 0.5 * (6378137 + 6356752)
-    t = math.sin(phi1) * math.sin(phi2) * math.cos(long1 - long2) + math.cos(
+    t = math.sin(phi1) * math.sin(phi2) * math.cos(lon1 - lon2) + math.cos(
         phi1
     ) * math.cos(phi2)
     return r * math.acos(t)
 
 
-def ellipsoidal_distance(lat1, long1, lat2, long2):
+def ellipsoidal_distance(lat1, lon1, lat2, lon2):
     """'
     Adding the distance between two geographical locations
     the distance is calucualte on a ellipsoide with earth parms.
@@ -65,7 +65,7 @@ def ellipsoidal_distance(lat1, long1, lat2, long2):
     phi1, phi2 = lat1, lat2
     U1 = math.atan((1 - f) * math.tan(phi1))
     U2 = math.atan((1 - f) * math.tan(phi2))
-    L1, L2 = long1, long2
+    L1, L2 = lon1, lon2
     L = L2 - L1
 
     lambda_old = L + 0
