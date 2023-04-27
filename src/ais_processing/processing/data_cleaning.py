@@ -3,7 +3,7 @@ import pandas as pd
 
 def remove_nan(df: pd.core.frame.DataFrame):
     """ """
-    df = df.dropna(subset=["lat", "lon", "sog", "cog"])
+    df = df.dropna(subset=["lat", "lon"])
     return df
 
 
