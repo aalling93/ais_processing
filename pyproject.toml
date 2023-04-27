@@ -10,7 +10,7 @@ version = "0.0.1.1"
 authors = [
   { name="Aalling93", email="kaaso@space.dtu.dk" },
 ]
-description = "ais_processing."
+description = "ais_processing"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
