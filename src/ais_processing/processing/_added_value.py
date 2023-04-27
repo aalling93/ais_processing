@@ -5,7 +5,7 @@ from ._ais_helper_funcs import *
 
 
 
-def add_ids_all(df: pd.core.frame.DataFrame, allowed_stop: int = 350, min_messages: int = 10):
+def add_ids_all(df: pd.core.frame.DataFrame, allowed_stop: int = 350, min_messages: int = 1):
     df = df.groupby("mmsi").apply(
         get_ids, allowed_stop=allowed_stop, min_messages=min_messages
     )
@@ -13,7 +13,7 @@ def add_ids_all(df: pd.core.frame.DataFrame, allowed_stop: int = 350, min_messag
     return df
 
 
-def get_ids(df: pd.core.frame.DataFrame, allowed_stop: int = 350, min_messages: int = 10):
+def get_ids(df: pd.core.frame.DataFrame, allowed_stop: int = 350, min_messages: int = 1):
     df = get_time_spent_single(df)
     df = split_trajectory(df, allowed_stop=allowed_stop)
     df = remove_min_messages(df, min_messages=min_messages)
