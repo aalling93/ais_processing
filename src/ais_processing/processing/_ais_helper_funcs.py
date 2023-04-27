@@ -44,7 +44,7 @@ def split_trajecotries(
 ):
     """
     This function spilt up a AIS df if there is a brek of
-    Since large datasets with long periods will be used, it is important to split up tracks where a ship has been in e.g a habour for a few weeks.
+    Since large datasets with lon periods will be used, it is important to split up tracks where a ship has been in e.g a habour for a few weeks.
     There can be multiple of such anchor points.
     It is the individual tracks that is of interest, and not a ships lifelong journey.
 
@@ -171,7 +171,7 @@ def load_dataset(df: str):
         pass
 
     try:
-        df = df.rename(columns={"lon": "long"})
+        df = df.rename(columns={"long": "lon"})
     except:
         pass
     try:
@@ -184,8 +184,8 @@ def load_dataset(df: str):
         df.cog = df.cog.astype(np.float32)
         df.sog = df.sog.astype(np.float32)
         df.lat = df.lat.astype(np.float32)
-        df.long = df.long.astype(np.float32)
-        # df.long = df.long+180
+        df.lon = df.lon.astype(np.float32)
+        # df.lon = df.lon+180
         # df.lat = df.lat+90
         df.mmsi = df.mmsi.astype(np.int16)
         df.imo = df.imo.astype(np.int16)

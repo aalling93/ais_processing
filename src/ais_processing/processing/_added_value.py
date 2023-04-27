@@ -42,7 +42,7 @@ def get_bearing_single(df: pd.core.frame.DataFrame):
     """Adding calculated bearing to df"""
     df = df.set_index("lat")
     df.loc[:, "bearing_calculated"] = (
-        df["long"]
+        df["lon"]
         .rolling(2)
         .apply(calculate_bearing_single, raw=False)
         .astype(np.float32)
@@ -54,13 +54,13 @@ def get_bearing_single(df: pd.core.frame.DataFrame):
 
 
 def get_co_ordinates_single(df: pd.core.frame.DataFrame):
-    """adding change in lat and long to df"""
+    """adding change in lat and lon to df"""
     df = df.copy()
     df.loc[:, "delta_lat"] = df.lat.diff()
     df.loc[0, "delta_lat"] = 0
 
-    df.loc[:, "delta_long"] = df.long.diff()
-    df.loc[0, "delta_long"] = 0
+    df.loc[:, "delta_lon"] = df.lon.diff()
+    df.loc[0, "delta_lon"] = 0
     return df
 
 
@@ -137,7 +137,7 @@ def get_total_distance_single(df: pd.core.frame.DataFrame):
 
         # df["running_distance"] =  (df.rolling(2).apply(haversine_distance)
         df["running_distance"] = (
-            df["long"].rolling(2, axis=0).apply(haversine_distance, raw=False)
+            df["lon"].rolling(2, axis=0).apply(haversine_distance, raw=False)
         )
         df["total_distance"] = df["running_distance"].cumsum().astype(np.float32)
         df = df.reset_index(level=0)

@@ -6,6 +6,6 @@ setup(
   author='Kristian Aalling Sørensen',
   author_email='kaaso@space.dtu.dk',
   install_requires=['numpy'],
-  version='0.0.1.1',
+  version='0.0.1.2',
 )
 
