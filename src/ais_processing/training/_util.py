@@ -3,24 +3,12 @@ import numpy as np
 import collections
 
 
-def resample_all_ids(df, resampling_frq: int = 5):
-    df = df.copy()
-    df = df.groupby("ids").apply(resample_ids, resampling_frq=resampling_frq)
-    df = df.reset_index()
-    try:
-        del df["level_1"]
-    except:
-        pass
-    try:
-        del df["level_0"]
-    except:
-        pass
-    return df
+
 
 
 
 def get_datasets(
-    df, lookback_offset: int = 1, lookback: int = 5, target_observations: int = 1
+    df: pd.core.frame.DataFrame, lookback_offset: int = 1, lookback: int = 5, target_observations: int = 1
 ):
 
     sample = (
@@ -44,7 +32,7 @@ def get_datasets(
 
 
 def datasets_training(
-    df, lookback_offset: int = 1, lookback: int = 5, target_observations: int = 1
+    df: pd.core.frame.DataFrame, lookback_offset: int = 1, lookback: int = 5, target_observations: int = 1
 ):
     samples = []
     targets = []
@@ -63,60 +51,10 @@ def datasets_training(
 
 
 
-def resample_ids(df, resampling_frq: int = 5):
-    """
-
-    Timestamps do not have fixed intervals.
-    It ranges from less than 10 sec to more than hours aparts (amount of hours defined by ais.df_split_ais() )
-    To account for this large varibility, and to add more generability in the NN, a resampling is performed.
-    This resampling resampel the data using a mean method.
-
-
-
-    First, we generate the underlying data grid by using mean().
-    This generates the grid with NaNs as values. Afterwards, we fill the NaNs with interpolated values by calling the interpolate() method on the read value column
-    """
-    df.index = df.time
-
-    try:
-        try:
-            df = (
-                df.resample(f"{resampling_frq}min")
-                .mean()
-                .interpolate(method="cubicspline")
-            )
-
-        except:
-            try:
-                df = (
-                    df.resample(f"{resampling_frq}min")
-                    .mean()
-                    .interpolate(method="spline", order=3)
-                )
-            except:
-                try:
-                    df = (
-                        df.resample(f"{resampling_frq}min")
-                        .mean()
-                        .interpolate(method="spline", order=3, s=0.0)
-                    )
-                except:
-                    df = (
-                        df.resample(f"{resampling_frq}min", origin="start").mean().pad()
-                    )
-
-                pass
-            pass
-        df = df.reset_index()
-    except Exception as e:
-        print(f"Error in resampling id: {df.ids.iloc[0]}: {e}")
-        pass
-
-    return df
 
 
 def raw2clean(
-    df_raw, t_messages=100, t_pausetime=1000, f_resampling=10, t_maxlengt=300, verbose=0
+    df_raw: pd.core.frame.DataFrame, t_messages=100, t_pausetime=1000, f_resampling=10, t_maxlengt=300, verbose=0
 ):
     """
 
@@ -166,7 +104,7 @@ def raw2clean(
 
 
 def make_dataset_single(
-    df, lookback: int = 5, lookback_offset: int = 0, target_observations: int = 0
+    df: pd.core.frame.DataFrame, lookback: int = 5, lookback_offset: int = 0, target_observations: int = 0
 ):
     samples = []
     targets = []
@@ -182,7 +120,7 @@ def make_dataset_single(
     return samples, targets
 
 
-def add_datasets_all(df):
+def add_datasets_all(df: pd.core.frame.DataFrame):
     try:
         samples, targets = df.groupby("ids").apply(make_dataset_single)
         return samples, targets

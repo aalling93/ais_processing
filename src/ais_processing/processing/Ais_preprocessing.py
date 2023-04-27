@@ -60,7 +60,18 @@ class Ais_processing:
 
 
 def interpolate(df: pd.core.frame.DataFrame, freq: int = 1):
-    "df grouped by, e.g., MMSI or IDS. frq in minutes."
+    """df grouped by, e.g., MMSI or IDS. frq in minutes.
+    Timestamps do not have fixed intervals.
+    It ranges from less than 10 sec to more than hours aparts (amount of hours defined by ais.df_split_ais() )
+    To account for this large varibility, and to add more generability in the NN, a resampling is performed.
+    This resampling resampel the data using a mean method.
+
+
+
+    First, we generate the underlying data grid by using mean().
+    This generates the grid with NaNs as values. Afterwards, we fill the NaNs with interpolated values by calling the interpolate() method on the read value column
+    """
+    
     df.index = df.time
     df = (
         df.resample(f"{freq}min")

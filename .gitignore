@@ -16,7 +16,7 @@ data/raw
 data/external
 data/interim
 data/processed
-
+!notebooks/process_ais.ipynb
 data/*
 notebooks/*
 reports/*
