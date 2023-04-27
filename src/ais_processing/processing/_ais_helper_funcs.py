@@ -3,7 +3,7 @@ import pandas as pd
 from ._added_value import *
 
 
-def remove_min_messages(df: pd.core.frame.DataFrame, min_messages: int = 10):
+def remove_min_messages(df: pd.core.frame.DataFrame, min_messages: int = 1):
     # df = df.copy()
     try:
         delete_id = []
@@ -89,7 +89,7 @@ def split_trajecotries(
 
 
 def split_trajectory(
-    df: pd.core.frame.DataFrame, allowed_stop: int = 100, time_id: str = ""
+    df: pd.core.frame.DataFrame, allowed_stop: int = 3000, time_id: str = ""
 ):
     """ """
     df_combined = pd.DataFrame()
@@ -112,6 +112,7 @@ def split_trajectory(
                 df_combined = pd.concat([df_combined, df_temp])
             del df_temp
         else:
+            
             df_combined = df
             df_combined["ids"] = f"{abs(df.mmsi.iloc[0])}_{1}"
 
